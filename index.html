@@ -476,10 +476,9 @@
       console.error(error);
 
       status.textContent =
-        "Не удалось сохранить ответ. Проверь подключение.";
+  "Ошибка: " + error.message;
 
-      status.className =
-        "status error";
+status.className = "status error";
 
     }
 
