@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Life Manager</title>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -35,10 +35,6 @@
     .logo {
       font-size: 25px;
       font-weight: 700;
-    }
-
-    .menu {
-      font-size: 24px;
     }
 
     .hero {
@@ -72,7 +68,7 @@
       margin-bottom: 35px;
     }
 
-    .start-button {
+    button {
       width: 100%;
       border: none;
       border-radius: 16px;
@@ -84,8 +80,8 @@
       cursor: pointer;
     }
 
-    .start-button:active {
-      transform: scale(0.98);
+    button:active {
+      transform: scale(.98);
     }
 
     .features {
@@ -153,7 +149,7 @@
 
     .input {
       width: 100%;
-      min-height: 120px;
+      min-height: 140px;
       border: 1px solid #dddfe3;
       border-radius: 15px;
       padding: 15px;
@@ -164,145 +160,332 @@
     }
 
     .continue {
-      width: 100%;
       margin-top: 15px;
-      padding: 17px;
-      border: none;
-      border-radius: 15px;
-      background: #17181c;
-      color: white;
-      font-size: 16px;
-      font-weight: 600;
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+      color: #777a82;
+    }
+
+    .success {
+      color: #16803c;
+    }
+
+    .error {
+      color: #c62828;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="app">
+<div class="app">
 
-    <div id="home">
+  <!-- ГЛАВНЫЙ ЭКРАН -->
+  <div id="home">
 
-      <div class="top">
-        <div class="logo">Life Manager</div>
-        <div class="menu">☰</div>
+    <div class="top">
+      <div class="logo">Life Manager</div>
+      <div>🧭</div>
+    </div>
+
+    <div class="hero">
+
+      <div class="compass">🧭</div>
+
+      <h1>
+        Твоя жизнь.<br>
+        Твой путь.
+      </h1>
+
+      <div class="subtitle">
+        AI-партнёр, который постепенно узнаёт тебя,
+        помогает понять себя и превращает желания
+        в конкретные действия.
       </div>
 
-      <div class="hero">
+      <button onclick="startDiscovery()">
+        Начать знакомство
+      </button>
 
-        <div class="compass">🧭</div>
+    </div>
 
-        <h1>
-          Твоя жизнь.<br>
-          Твой путь.
-        </h1>
+    <div class="features">
 
-        <div class="subtitle">
-          AI-партнёр, который постепенно узнаёт тебя,
-          помогает понять себя и превращает желания
-          в конкретные действия.
+      <div class="feature">
+        <div class="icon">🧠</div>
+        <div>
+          <div class="feature-title">Поймём, чего ты хочешь</div>
+          <div class="feature-text">
+            Без готовых тестов. Начнём с разговора.
+          </div>
         </div>
-
-        <button class="start-button" onclick="startDiscovery()">
-          Начать знакомство
-        </button>
-
       </div>
 
-      <div class="features">
-
-        <div class="feature">
-          <div class="icon">🧠</div>
-          <div>
-            <div class="feature-title">Поймём, чего ты хочешь</div>
-            <div class="feature-text">
-              Без готовых тестов. Начнём с разговора.
-            </div>
+      <div class="feature">
+        <div class="icon">🧭</div>
+        <div>
+          <div class="feature-title">Найдём направление</div>
+          <div class="feature-text">
+            Создадим твой персональный Life Compass.
           </div>
         </div>
-
-        <div class="feature">
-          <div class="icon">🧭</div>
-          <div>
-            <div class="feature-title">Найдём направление</div>
-            <div class="feature-text">
-              Создадим твой персональный Life Compass.
-            </div>
-          </div>
-        </div>
-
-        <div class="feature">
-          <div class="icon">🎯</div>
-          <div>
-            <div class="feature-title">Превратим желания в действия</div>
-            <div class="feature-text">
-              Цели, планы и конкретные шаги на каждый день.
-            </div>
-          </div>
-        </div>
-
-        <div class="feature">
-          <div class="icon">✨</div>
-          <div>
-            <div class="feature-title">AI будет узнавать тебя</div>
-            <div class="feature-text">
-              Со временем он будет видеть твои привычки,
-              цели и повторяющиеся закономерности.
-            </div>
-          </div>
-        </div>
-
       </div>
 
-      <div class="footer">
-        AI Life Manager · Your personal life companion
+      <div class="feature">
+        <div class="icon">🎯</div>
+        <div>
+          <div class="feature-title">Превратим желания в действия</div>
+          <div class="feature-text">
+            Цели, планы и конкретные шаги на каждый день.
+          </div>
+        </div>
+      </div>
+
+      <div class="feature">
+        <div class="icon">✨</div>
+        <div>
+          <div class="feature-title">AI будет узнавать тебя</div>
+          <div class="feature-text">
+            Со временем он будет видеть твои привычки,
+            цели и повторяющиеся закономерности.
+          </div>
+        </div>
       </div>
 
     </div>
 
-
-    <div id="discovery" class="hidden">
-
-      <div class="top">
-        <div class="logo">Life Manager</div>
-        <div>🧭</div>
-      </div>
-
-      <div class="welcome">
-
-        <h2>Давай познакомимся</h2>
-
-        <div class="question">
-          Здесь нет правильных или неправильных ответов.
-          Расскажи своими словами:
-          <br><br>
-          <strong>Что сейчас происходит в твоей жизни
-          и что тебе больше всего хочется изменить?</strong>
-        </div>
-
-        <textarea
-          class="input"
-          placeholder="Напиши всё, что приходит в голову..."
-        ></textarea>
-
-        <button class="continue">
-          Продолжить
-        </button>
-
-      </div>
-
+    <div class="footer">
+      AI Life Manager · Your personal life companion
     </div>
 
   </div>
 
 
-  <script>
-    function startDiscovery() {
-      document.getElementById("home").classList.add("hidden");
-      document.getElementById("discovery").classList.remove("hidden");
-      window.scrollTo(0, 0);
+  <!-- DISCOVERY -->
+  <div id="discovery" class="hidden">
+
+    <div class="top">
+      <div class="logo">Life Manager</div>
+      <div>🧭</div>
+    </div>
+
+    <div class="welcome">
+
+      <h2>Давай познакомимся</h2>
+
+      <div class="question">
+        Здесь нет правильных или неправильных ответов.
+        Расскажи своими словами:
+        <br><br>
+
+        <strong>
+          Что сейчас происходит в твоей жизни
+          и что тебе больше всего хочется изменить?
+        </strong>
+      </div>
+
+      <textarea
+        id="answer"
+        class="input"
+        placeholder="Напиши всё, что приходит в голову..."
+      ></textarea>
+
+      <button
+        class="continue"
+        onclick="saveDiscovery()"
+      >
+        Продолжить
+      </button>
+
+      <div id="status" class="status"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+  /*
+   =====================================================
+   SUPABASE
+   =====================================================
+
+   ВСТАВЬ СЮДА СВОИ ДВА ЗНАЧЕНИЯ.
+
+   НЕ МЕНЯЙ НАЗВАНИЯ ПЕРЕМЕННЫХ.
+  */
+
+  const SUPABASE_URL = "https://ctznbfyjuwyowoblmkry.supabase.co/rest/v1/";
+
+  const SUPABASE_KEY = "sb_publishable_GrJ0zceUOm89IsEH1axMlw_xIE4GLL9";
+
+
+  const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+  /*
+   =====================================================
+   USER ID
+   =====================================================
+  */
+
+  function getUserId() {
+
+    // Если приложение открыто внутри Telegram
+    if (
+      window.Telegram &&
+      Telegram.WebApp &&
+      Telegram.WebApp.initDataUnsafe &&
+      Telegram.WebApp.initDataUnsafe.user
+    ) {
+
+      return String(
+        Telegram.WebApp.initDataUnsafe.user.id
+      );
+
     }
-  </script>
+
+    // Пока тестируем через обычный браузер
+    let localId = localStorage.getItem("life_manager_test_id");
+
+    if (!localId) {
+
+      localId =
+        "test_" +
+        Date.now() +
+        "_" +
+        Math.random()
+          .toString(36)
+          .substring(2, 10);
+
+      localStorage.setItem(
+        "life_manager_test_id",
+        localId
+      );
+
+    }
+
+    return localId;
+  }
+
+
+  /*
+   =====================================================
+   START DISCOVERY
+   =====================================================
+  */
+
+  function startDiscovery() {
+
+    document
+      .getElementById("home")
+      .classList.add("hidden");
+
+    document
+      .getElementById("discovery")
+      .classList.remove("hidden");
+
+    window.scrollTo(0, 0);
+  }
+
+
+  /*
+   =====================================================
+   SAVE DISCOVERY ANSWER
+   =====================================================
+  */
+
+  async function saveDiscovery() {
+
+    const answerElement =
+      document.getElementById("answer");
+
+    const status =
+      document.getElementById("status");
+
+    const answer =
+      answerElement.value.trim();
+
+
+    if (!answer) {
+
+      status.textContent =
+        "Сначала расскажи немного о себе 🙂";
+
+      status.className = "status error";
+
+      return;
+    }
+
+
+    status.textContent =
+      "Сохраняю твою историю...";
+
+    status.className = "status";
+
+
+    try {
+
+      const userId = getUserId();
+
+
+      const { error } =
+        await supabaseClient
+          .from("discovery")
+          .insert({
+
+            telegram_id: userId,
+
+            question:
+              "Что сейчас происходит в твоей жизни и что тебе больше всего хочется изменить?",
+
+            answer: answer
+
+          });
+
+
+      if (error) {
+
+        throw error;
+
+      }
+
+
+      status.textContent =
+        "Сохранил. Это только начало 🧭";
+
+      status.className =
+        "status success";
+
+
+      answerElement.value = "";
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      status.textContent =
+        "Не удалось сохранить ответ. Проверь подключение.";
+
+      status.className =
+        "status error";
+
+    }
+
+  }
+
+</script>
 
 </body>
 </html>
