@@ -461,14 +461,29 @@
       }
 
 
-      status.textContent =
-        "Сохранил. Это только начало 🧭";
+      status.textContent = "AI думает... 🧠";
+status.className = "status";
 
-      status.className =
-        "status success";
+const aiResponse = await fetch("/api/chat", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    message: answer
+  })
+});
 
+const aiData = await aiResponse.json();
 
-      answerElement.value = "";
+if (!aiResponse.ok) {
+  throw new Error(aiData.error || "Не удалось получить ответ AI");
+}
+
+status.textContent = aiData.reply;
+status.className = "status success";
+
+answerElement.value = "";
 
 
     } catch (error) {
@@ -482,7 +497,7 @@ status.className = "status error";
 
     }
 
-  }
+  } не
 
 </script>
 
